@@ -9,7 +9,8 @@ public class Solution {
     private final String packageName;
 
     public Solution() {
-        this.packageName = this.getClass().getPackage().getName();
+        String[] pkg = this.getClass().getPackage().getName().split("\\.");
+        this.packageName = pkg[pkg.length - 1];
     }
 
     private int solveExample() throws IOException {
@@ -68,7 +69,7 @@ public class Solution {
 
     public void solve() throws IOException {
         int answer0 = solveExample();
-        System.out.println("Solution1: " + answer0);
+        System.out.println("Solution0: " + answer0);
 
         int answer1 = solve1();
         System.out.println("Solution1: " + answer1);
