@@ -88,13 +88,12 @@ public class Solution {
     }
 
     private int solve2() throws IOException {
-
         final String fileName = "/part1.input";
         BufferedReader br = new BufferedReader(
                 new FileReader("resources/" + this.packageName + fileName));
         Scanner inStream = new Scanner(br);
 
-        ArrayList<Character> priorityString = new ArrayList<>();
+        ArrayList<Character> commonInGroups = new ArrayList<>();
         while (inStream.hasNextLine()) {
             String input1 = inStream.nextLine();
             String input2 = inStream.nextLine();
@@ -120,15 +119,15 @@ public class Solution {
                 }
             }
 
-//            commonInGroups.addAll()
+            commonInGroups.addAll(finalLevel.stream().toList());
         }
 
         int answer = 0;
-        for (char p: priorityString) {
-            if (Character.isUpperCase(p)) {
-                answer += p-'A'+27;
+        for (char cig: commonInGroups) {
+            if (Character.isUpperCase(cig)) {
+                answer += cig-'A'+27;
             } else {
-                answer += p-'a'+1;
+                answer += cig-'a'+1;
             }
         }
 
@@ -140,11 +139,11 @@ public class Solution {
 //        int answer0 = solveExample();
 //        System.out.println("Solution0: " + answer0);
 //
-        int answer1 = solve1();
-        System.out.println("Solution1: " + answer1);
+//        int answer1 = solve1();
+//        System.out.println("Solution1: " + answer1);
 //
-//        int answer2 = solve2();
-//        System.out.println("Solution2: " + answer2);
+        int answer2 = solve2();
+        System.out.println("Solution2: " + answer2);
     }
 }
 
