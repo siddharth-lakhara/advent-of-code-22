@@ -68,32 +68,44 @@ public class Solution {
     }
 
     private int solve2() throws IOException {
-        final String fileName = "/part2.input";
+        final String fileName = "/part1.input";
         BufferedReader br = new BufferedReader(
                 new FileReader("resources/" + this.packageName + fileName));
         Scanner inStream = new Scanner(br);
 
+        int answer = 0;
         while (inStream.hasNextLine()) {
             String input = inStream.nextLine();
-            if (input.length() > 0) {
+            String[] rangeString = input.split(",");
+            int[] range1 = Arrays.stream(rangeString[0].split("-")).mapToInt(s -> Integer.parseInt(s)).toArray();
+            int[] range2 = Arrays.stream(rangeString[1].split("-")).mapToInt(s -> Integer.parseInt(s)).toArray();
 
+            boolean fullOverlapCond1 = range1[0] >= range2[0] && range1[1] <= range2[1];
+            boolean fullOverlapCond2 = range2[0] >= range1[0] && range2[1] <= range1[1];
+            boolean isFullOverlap = fullOverlapCond1 || fullOverlapCond2;
+
+            boolean partialOverlapCond1 = range1[0] >= range2[0] && range1[0] <= range2[1];
+            boolean partialOverlapCond2 = range1[1] >= range2[0] && range1[1] <= range2[1];
+            boolean isPartialOverlap = partialOverlapCond1 || partialOverlapCond2;
+
+            if (isPartialOverlap || isFullOverlap) {
+                answer += 1;
             }
-
         }
 
         inStream.close();
-        return 0;
+        return answer;
     }
 
     public void solve() throws IOException {
 //        int answer0 = solveExample();
 //        System.out.println("Solution0: " + answer0);
 
-        int answer1 = solve1();
-        System.out.println("Solution1: " + answer1);
+//        int answer1 = solve1();
+//        System.out.println("Solution1: " + answer1);
 //
-//        int answer2 = solve2();
-//        System.out.println("Solution2: " + answer2);
+        int answer2 = solve2();
+        System.out.println("Solution2: " + answer2);
     }
 }
 
