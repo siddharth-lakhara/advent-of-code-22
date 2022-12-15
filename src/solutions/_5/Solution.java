@@ -44,9 +44,9 @@ public class Solution {
         drawing.remove(drawing.size()-1);
 
         for (String d: drawing) {
-            for (int idx = 0; idx < d.length(); idx++) {
+            for (int idx = 1; idx < d.length(); idx += 4) {
                 char ch = d.charAt(idx);
-                if (Character.isUpperCase(ch)) {
+                if (ch != ' ') {
                     int crateNum = (idx-1)/4;
                     stacks.get(crateNum).add(Character.toString(ch));
                 }
@@ -122,9 +122,9 @@ public class Solution {
         drawing.remove(drawing.size()-1);
 
         for (String d: drawing) {
-            for (int idx = 0; idx < d.length(); idx++) {
+            for (int idx = 1; idx < d.length(); idx+=4) {
                 char ch = d.charAt(idx);
-                if (Character.isUpperCase(ch)) {
+                if (ch != ' ') {
                     int crateNum = (idx-1)/4;
                     stacks.get(crateNum).add(Character.toString(ch));
                 }
