@@ -1,6 +1,6 @@
 package solutions;
 
-import solutions._4.Solution;
+import solutions._5.Solution;
 
 import java.io.IOException;
 
