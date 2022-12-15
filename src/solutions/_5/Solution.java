@@ -96,33 +96,75 @@ public class Solution {
         return 0;
     }
 
-    private int solve2() throws IOException {
-        final String fileName = "/part2.input";
+    private String solve2() throws IOException {
+        final String fileName = "/part1.input";
         BufferedReader br = new BufferedReader(
                 new FileReader("resources/" + this.packageName + fileName));
         Scanner inStream = new Scanner(br);
 
-        while (inStream.hasNextLine()) {
+        ArrayList<String> drawing = new ArrayList<>();
+
+        while (true) {
             String input = inStream.nextLine();
-            if (input.length() > 0) {
-
+            if (input.length() == 0) {
+                break;
+            } else {
+                drawing.add(input);
             }
+        }
 
+        String[] lastLine = drawing.get(drawing.size()-1).split(" ");
+        int totalStacks = Integer.parseInt(lastLine[lastLine.length-1]);
+        ArrayList<LinkedList<String>> stacks = new ArrayList<>(totalStacks);
+        for (int idx = 0; idx < totalStacks; idx++) {
+            stacks.add(new LinkedList<>());
+        }
+        drawing.remove(drawing.size()-1);
+
+        for (String d: drawing) {
+            for (int idx = 0; idx < d.length(); idx++) {
+                char ch = d.charAt(idx);
+                if (Character.isUpperCase(ch)) {
+                    int crateNum = (idx-1)/4;
+                    stacks.get(crateNum).add(Character.toString(ch));
+                }
+            }
+        }
+
+        while (inStream.hasNextLine()) {
+            String cmd = inStream.nextLine();
+            Matcher m = pattern.matcher(cmd);
+            m.find(0);
+            int numStacks = Integer.parseInt(m.group(1));
+            int fromStack = Integer.parseInt(m.group(2));
+            int toStack = Integer.parseInt(m.group(3));
+
+            List<String> subList = stacks.get(fromStack-1).subList(0, numStacks);
+            stacks.get(toStack-1).addAll(0, subList);
+            subList.clear();
+        }
+
+        String answer = "";
+        for (Deque<String> dq: stacks) {
+            String crate = dq.peekFirst();
+            if (crate != null) {
+                answer += crate;
+            }
         }
 
         inStream.close();
-        return 0;
+        return answer;
     }
 
     public void solve() throws IOException {
-        String answer0 = solveExample();
-        System.out.println("Solution0: " + answer0);
+//        String answer0 = solveExample();
+//        System.out.println("Solution0: " + answer0);
 
 //        int answer1 = solve1();
 //        System.out.println("Solution1: " + answer1);
 //
-//        int answer2 = solve2();
-//        System.out.println("Solution2: " + answer2);
+        String answer2 = solve2();
+        System.out.println("Solution2: " + answer2);
     }
 }
 
